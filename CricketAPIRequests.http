@@ -1,0 +1,36 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+###
+GET http://localhost:8080/api/v1/players
+
+###
+GET http://localhost:8080/api/v1/players/1
+
+###
+DELETE http://localhost:8080/api/v1/players/2
+
+###
+POST http://localhost:8080/api/v1/players
+Content-Type: application/json
+
+{
+  "name": "Virat Kohli",
+  "matches": 600,
+  "runs": 50000,
+  "average": 25.67
+
+}
+
+###
+PUT http://localhost:8080/api/v1/players/1
+Content-Type: application/json
+
+{
+  "name": "MS Dhoni",
+  "matches": 600,
+  "runs": 50000,
+  "average":55.67
+
+}

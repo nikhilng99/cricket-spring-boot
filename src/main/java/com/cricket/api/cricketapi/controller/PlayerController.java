@@ -1,7 +1,8 @@
 package com.cricket.api.cricketapi.controller;
 
-import com.cricket.api.cricketapi.entity.Player;
+import com.cricket.api.cricketapi.dto.PlayerDTO;
 import com.cricket.api.cricketapi.service.PlayerService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,22 +21,22 @@ public class PlayerController {
 
     // Status 200
     @GetMapping("/{id}")
-    public ResponseEntity<Player> getPlayerById(@PathVariable Integer id){
-        Player player = playerService.getPlayerById(id);
-        return ResponseEntity.ok(player);
+    public ResponseEntity<PlayerDTO> getPlayerById(@PathVariable Integer id){
+        PlayerDTO playerDTO = playerService.getPlayerById(id);
+        return ResponseEntity.ok(playerDTO);
     }
 
     // Status 200
     @GetMapping
-    public ResponseEntity<List<Player>> getPlayers(){
-        List<Player> playerList = playerService.getAllPlayers();
+    public ResponseEntity<List<PlayerDTO>> getPlayers(){
+        List<PlayerDTO> playerList = playerService.getAllPlayers();
         return ResponseEntity.ok(playerList);
     }
 
     // Status 201 - Created
     @PostMapping
-    public ResponseEntity<Player> addPlayer(@RequestBody Player player){
-        Player insertedPlayer = playerService.insertPlayer(player);
+    public ResponseEntity<PlayerDTO> addPlayer(@RequestBody @Valid PlayerDTO playerDTO){
+        PlayerDTO insertedPlayer = playerService.insertPlayer(playerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(insertedPlayer);
     }
 
@@ -48,8 +49,8 @@ public class PlayerController {
 
     // Status 200
     @PutMapping("/{id}")
-    public ResponseEntity<Player> updatePlayer(@PathVariable Integer id, @RequestBody Player player){
-        Player updated = playerService.updatePlayerById(id, player);
+    public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable Integer id, @RequestBody @Valid PlayerDTO playerDTO){
+        PlayerDTO updated = playerService.updatePlayerById(id, playerDTO);
         return ResponseEntity.ok(updated);
     }
 }

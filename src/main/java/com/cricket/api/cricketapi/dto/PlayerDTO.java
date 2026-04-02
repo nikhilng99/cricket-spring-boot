@@ -1,0 +1,70 @@
+package com.cricket.api.cricketapi.dto;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
+public class PlayerDTO {
+    private Integer id;
+
+    @NotBlank(message = "Name cannot be blank")
+    private String name;
+
+    @Min(value = 0, message = "Matches cannot be negative")
+    private Integer matches;
+
+    @Min(value = 0, message = "Runs cannot be negative")
+    private Integer runs;
+
+    private Double average;
+
+    public PlayerDTO() {
+    }
+
+    public PlayerDTO(Integer id, String name, Integer matches, Integer runs, Double average) {
+        this.id = id;
+        this.name = name;
+        this.matches = matches;
+        this.runs = runs;
+        this.average = average;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getMatches() {
+        return matches;
+    }
+
+    public void setMatches(Integer matches) {
+        this.matches = matches;
+    }
+
+    public Integer getRuns() {
+        return runs;
+    }
+
+    public void setRuns(Integer runs) {
+        this.runs = runs;
+    }
+
+    public Double getAverage() {
+        return average;
+    }
+
+    public void setAverage(Double average) {
+        this.average = average;
+    }
+}

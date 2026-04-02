@@ -17,9 +17,9 @@ Content-Type: application/json
 
 {
   "name": "Virat Kohli",
-  "matches": 600,
-  "runs": 50000,
-  "average": 25.67
+  "matches":500,
+  "runs": 10000,
+  "average": 75.67
 
 }
 

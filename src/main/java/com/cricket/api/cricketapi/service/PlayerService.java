@@ -3,6 +3,7 @@ package com.cricket.api.cricketapi.service;
 import com.cricket.api.cricketapi.dto.PlayerDTO;
 import com.cricket.api.cricketapi.entity.Player;
 import com.cricket.api.cricketapi.exception.ResourceNotFoundException;
+import com.cricket.api.cricketapi.mapper.PlayerMapper;
 import com.cricket.api.cricketapi.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,29 +14,26 @@ import java.util.stream.Collectors;
 public class PlayerService {
 
     private final PlayerRepository playerRepository;
+    private final PlayerMapper playerMapper;
 
-    public PlayerService(PlayerRepository playerRepository) {
+    public PlayerService(PlayerRepository playerRepository, PlayerMapper playerMapper) {
         this.playerRepository = playerRepository;
+        this.playerMapper = playerMapper;
     }
 
     public PlayerDTO getPlayerById(Integer id){
         Player player = playerRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Player not found with id: " + id));
-        return toDTO(player);
+        return playerMapper.toDTO(player);
     }
 
     public List<PlayerDTO> getAllPlayers() {
-        return playerRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
+        return playerMapper.toDTOList(playerRepository.findAll());
     }
 
     public PlayerDTO insertPlayer(PlayerDTO playerDTO) {
-        Player player = new Player();
-        player.setName(playerDTO.getName());
-        player.setRuns(playerDTO.getRuns());
-        player.setMatches(playerDTO.getMatches());
-        player.setAverage(playerDTO.getAverage());
-
+        Player player = playerMapper.toEntity(playerDTO);
         Player savedPlayer = playerRepository.save(player);
-        return toDTO(savedPlayer);
+        return playerMapper.toDTO(savedPlayer);
     }
 
     public PlayerDTO updatePlayerById(Integer id, PlayerDTO playerDTO) {
@@ -46,7 +44,7 @@ public class PlayerService {
         oldPlayer.setRuns(playerDTO.getRuns());
 
         Player savedPlayer = playerRepository.save(oldPlayer);
-        return toDTO(savedPlayer);
+        return playerMapper.toDTO(savedPlayer);
     }
 
     public void removePlayer(Integer id) {
@@ -54,12 +52,12 @@ public class PlayerService {
         playerRepository.delete(player);
     }
 
-    private PlayerDTO toDTO(Player player){
-        return new PlayerDTO(player.getId(),
-                player.getName(),
-                player.getMatches(),
-                player.getRuns(),
-                player.getAverage());
-    }
+//    private PlayerDTO toDTO(Player player){
+//        return new PlayerDTO(player.getId(),
+//                player.getName(),
+//                player.getMatches(),
+//                player.getRuns(),
+//                player.getAverage());
+//    }
 
 }

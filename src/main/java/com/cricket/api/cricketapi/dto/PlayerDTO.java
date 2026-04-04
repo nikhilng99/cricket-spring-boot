@@ -1,7 +1,9 @@
 package com.cricket.api.cricketapi.dto;
 
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class PlayerDTO {
     private Integer id;
@@ -9,12 +11,16 @@ public class PlayerDTO {
     @NotBlank(message = "Name cannot be blank")
     private String name;
 
+    @NotNull(message = "Matches is required")
     @Min(value = 0, message = "Matches cannot be negative")
     private Integer matches;
 
+    @NotNull(message = "Runs is required")
     @Min(value = 0, message = "Runs cannot be negative")
     private Integer runs;
 
+    @NotNull(message = "Average is required")
+    @DecimalMin(value = "0.0", message = "Average cannot be negative")
     private Double average;
 
     public PlayerDTO() {

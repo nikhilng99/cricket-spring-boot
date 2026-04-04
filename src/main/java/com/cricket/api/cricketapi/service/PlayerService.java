@@ -6,9 +6,9 @@ import com.cricket.api.cricketapi.exception.ResourceNotFoundException;
 import com.cricket.api.cricketapi.mapper.PlayerMapper;
 import com.cricket.api.cricketapi.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {
@@ -36,6 +36,7 @@ public class PlayerService {
         return playerMapper.toDTO(savedPlayer);
     }
 
+    @Transactional
     public PlayerDTO updatePlayerById(Integer id, PlayerDTO playerDTO) {
         Player oldPlayer= playerRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Player not found with id: " + id));
         oldPlayer.setAverage(playerDTO.getAverage());
@@ -47,17 +48,9 @@ public class PlayerService {
         return playerMapper.toDTO(savedPlayer);
     }
 
+    @Transactional
     public void removePlayer(Integer id) {
         Player player = playerRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Player not found with id: " + id));
         playerRepository.delete(player);
     }
-
-//    private PlayerDTO toDTO(Player player){
-//        return new PlayerDTO(player.getId(),
-//                player.getName(),
-//                player.getMatches(),
-//                player.getRuns(),
-//                player.getAverage());
-//    }
-
 }

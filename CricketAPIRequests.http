@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
   "name": "MS Dhoni",
-  "matches":500,
+  "matches": 500,
   "runs": 1000,
   "average": 55.67
 

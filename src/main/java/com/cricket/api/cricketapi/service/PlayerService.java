@@ -22,7 +22,7 @@ public class PlayerService {
     }
 
     public PlayerDTO getPlayerById(Integer id){
-        Player player = playerRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Player not found with id: " + id));
+        Player player = playerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Player not found with id: " + id));
         return playerMapper.toDTO(player);
     }
 
@@ -31,26 +31,22 @@ public class PlayerService {
     }
 
     public PlayerDTO insertPlayer(PlayerDTO playerDTO) {
-        Player player = playerMapper.toEntity(playerDTO);
-        Player savedPlayer = playerRepository.save(player);
+        Player savedPlayer = playerRepository.save(playerMapper.toEntity(playerDTO));
         return playerMapper.toDTO(savedPlayer);
     }
 
     @Transactional
     public PlayerDTO updatePlayerById(Integer id, PlayerDTO playerDTO) {
-        Player oldPlayer= playerRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Player not found with id: " + id));
-        oldPlayer.setAverage(playerDTO.getAverage());
-        oldPlayer.setMatches(playerDTO.getMatches());
-        oldPlayer.setName(playerDTO.getName());
-        oldPlayer.setRuns(playerDTO.getRuns());
+        Player player= playerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Player not found with id: " + id));
+        playerMapper.updateEntityFromDTO(playerDTO, player);
 
-        Player savedPlayer = playerRepository.save(oldPlayer);
+        Player savedPlayer = playerRepository.save(player);
         return playerMapper.toDTO(savedPlayer);
     }
 
     @Transactional
     public void removePlayer(Integer id) {
-        Player player = playerRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Player not found with id: " + id));
+        Player player = playerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Player not found with id: " + id));
         playerRepository.delete(player);
     }
 }

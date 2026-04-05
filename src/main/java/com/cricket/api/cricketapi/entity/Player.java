@@ -1,9 +1,6 @@
 package com.cricket.api.cricketapi.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -16,6 +13,10 @@ public class Player {
     private Integer matches;
     private Integer runs;
     private Double average;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     public Player() {
     }
@@ -66,6 +67,14 @@ public class Player {
 
     public void setAverage(Double average) {
         this.average = average;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     @Override

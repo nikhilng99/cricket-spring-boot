@@ -2,9 +2,11 @@ package com.cricket.api.cricketapi.service;
 
 import com.cricket.api.cricketapi.dto.PlayerDTO;
 import com.cricket.api.cricketapi.entity.Player;
+import com.cricket.api.cricketapi.entity.Team;
 import com.cricket.api.cricketapi.exception.ResourceNotFoundException;
 import com.cricket.api.cricketapi.mapper.PlayerMapper;
 import com.cricket.api.cricketapi.repository.PlayerRepository;
+import com.cricket.api.cricketapi.repository.TeamRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +17,12 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
     private final PlayerMapper playerMapper;
+    private final TeamRepository teamRepository;
 
-    public PlayerService(PlayerRepository playerRepository, PlayerMapper playerMapper) {
+    public PlayerService(PlayerRepository playerRepository, PlayerMapper playerMapper, TeamRepository teamRepository) {
         this.playerRepository = playerRepository;
         this.playerMapper = playerMapper;
+        this.teamRepository = teamRepository;
     }
 
     public PlayerDTO getPlayerById(Integer id){
@@ -31,8 +35,12 @@ public class PlayerService {
     }
 
     public PlayerDTO insertPlayer(PlayerDTO playerDTO) {
-        Player savedPlayer = playerRepository.save(playerMapper.toEntity(playerDTO));
-        return playerMapper.toDTO(savedPlayer);
+        Player player = playerMapper.toEntity(playerDTO);
+        if (playerDTO.getTeamId() != null) {
+            Team team = teamRepository.findById(playerDTO.getTeamId()).orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + playerDTO.getTeamId()));
+            player.setTeam(team);
+        }
+        return playerMapper.toDTO(playerRepository.save(player));
     }
 
     @Transactional

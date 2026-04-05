@@ -23,15 +23,26 @@ public class PlayerDTO {
     @DecimalMin(value = "0.0", message = "Average cannot be negative")
     private Double average;
 
+    private Integer teamId;
+
+    public Integer getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
+    }
+
     public PlayerDTO() {
     }
 
-    public PlayerDTO(Integer id, String name, Integer matches, Integer runs, Double average) {
+    public PlayerDTO(Integer id, String name, Integer matches, Integer runs, Double average, Integer teamId) {
         this.id = id;
         this.name = name;
         this.matches = matches;
         this.runs = runs;
         this.average = average;
+        this.teamId = teamId;
     }
 
     public Integer getId() {

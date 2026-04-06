@@ -22,7 +22,7 @@ public class TeamService {
     }
 
     public TeamDTO getTeamById(Integer id) {
-        Team team = teamRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + id));
+        Team team = teamRepository.findByIdWithPlayers(id).orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + id));
         return teamMapper.toDTO(team);
     }
 
@@ -33,14 +33,14 @@ public class TeamService {
     }
 
     public List<TeamDTO> getAllTeams() {
-        return teamRepository.findAll()
+        return teamRepository.findAllWithPlayers()
                 .stream()
                 .map(teamMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public TeamDTO updateTeam(Integer id, TeamDTO teamDTO) {
-        Team team = teamRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + id));
+        Team team = teamRepository.findByIdWithPlayers(id).orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + id));
         teamMapper.updateEntityFromDTO(teamDTO, team);
         return teamMapper.toDTO(teamRepository.save(team));
     }

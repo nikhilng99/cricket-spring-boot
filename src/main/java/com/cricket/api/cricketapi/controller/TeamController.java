@@ -32,4 +32,9 @@ public class TeamController {
     public ResponseEntity<TeamDTO> createTeam(@RequestBody @Valid TeamDTO teamDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(teamService.createTeam(teamDTO));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamDTO> updateTeam(@PathVariable Integer id, @RequestBody @Valid TeamDTO teamDTO){
+        return ResponseEntity.ok(teamService.updateTeam(id, teamDTO));
+    }
 }

@@ -3,7 +3,7 @@ POST http://localhost:8080/api/v1/teams
 Content-Type: application/json
 
 {
-  "name": "India",
+  "name": "Team India",
   "country": "India"
 }
 
@@ -67,6 +67,15 @@ Content-Type: application/json
   "matches": 350,
   "runs": 8000,
   "average": 50.00
+}
+
+### Update team name
+PUT http://localhost:8080/api/v1/teams/1
+Content-Type: application/json
+
+{
+  "name": "Team India",
+  "country": "India"
 }
 
 ### Get all players

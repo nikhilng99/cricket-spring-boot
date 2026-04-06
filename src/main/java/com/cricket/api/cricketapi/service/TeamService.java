@@ -5,6 +5,7 @@ import com.cricket.api.cricketapi.entity.Team;
 import com.cricket.api.cricketapi.exception.ResourceNotFoundException;
 import com.cricket.api.cricketapi.mapper.TeamMapper;
 import com.cricket.api.cricketapi.repository.TeamRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,5 +37,11 @@ public class TeamService {
                 .stream()
                 .map(teamMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public TeamDTO updateTeam(Integer id, TeamDTO teamDTO) {
+        Team team = teamRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + id));
+        teamMapper.updateEntityFromDTO(teamDTO, team);
+        return teamMapper.toDTO(teamRepository.save(team));
     }
 }

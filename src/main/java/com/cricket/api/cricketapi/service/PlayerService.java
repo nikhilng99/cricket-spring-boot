@@ -7,6 +7,9 @@ import com.cricket.api.cricketapi.exception.ResourceNotFoundException;
 import com.cricket.api.cricketapi.mapper.PlayerMapper;
 import com.cricket.api.cricketapi.repository.PlayerRepository;
 import com.cricket.api.cricketapi.repository.TeamRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +33,8 @@ public class PlayerService {
         return playerMapper.toDTO(player);
     }
 
-    public List<PlayerDTO> getAllPlayers() {
-        return playerMapper.toDTOList(playerRepository.findAll());
+    public Page<PlayerDTO> getAllPlayers(Pageable pageable) {
+        return playerRepository.findAll(pageable).map(playerMapper::toDTO);
     }
 
     public PlayerDTO insertPlayer(PlayerDTO playerDTO) {

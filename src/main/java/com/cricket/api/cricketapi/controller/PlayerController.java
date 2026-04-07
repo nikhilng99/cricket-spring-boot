@@ -3,6 +3,9 @@ package com.cricket.api.cricketapi.controller;
 import com.cricket.api.cricketapi.dto.PlayerDTO;
 import com.cricket.api.cricketapi.service.PlayerService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +30,8 @@ public class PlayerController {
 
     // Status 200
     @GetMapping
-    public ResponseEntity<List<PlayerDTO>> getPlayers(){
-        List<PlayerDTO> playerList = playerService.getAllPlayers();
+    public ResponseEntity<Page<PlayerDTO>> getPlayers(@PageableDefault(size = 5, sort = "name") Pageable pageable){
+        Page<PlayerDTO> playerList = playerService.getAllPlayers(pageable);
         return ResponseEntity.ok(playerList);
     }
 

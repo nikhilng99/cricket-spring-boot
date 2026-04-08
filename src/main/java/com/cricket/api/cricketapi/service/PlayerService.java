@@ -37,6 +37,11 @@ public class PlayerService {
         return playerRepository.findAll(pageable).map(playerMapper::toDTO);
     }
 
+    public List<PlayerDTO> getAllPlayers() {
+        List<Player> playerList = playerRepository.findAll();
+        return playerMapper.toDTOList(playerList);
+    }
+
     public PlayerDTO insertPlayer(PlayerDTO playerDTO) {
         Player player = playerMapper.toEntity(playerDTO);
         if (playerDTO.getTeamId() != null) {

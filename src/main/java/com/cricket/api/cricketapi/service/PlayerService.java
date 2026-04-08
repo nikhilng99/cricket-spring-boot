@@ -65,4 +65,14 @@ public class PlayerService {
         Player player = playerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Player not found with id: " + id));
         playerRepository.delete(player);
     }
+
+    public List<PlayerDTO> getPlayersByTeam(Integer teamId) {
+        return playerMapper.toDTOList(playerRepository.findByTeamId(teamId));
+    }
+
+    public List<PlayerDTO> getPlayersByTeamWithMinRuns(Integer teamId, Integer minRuns) {
+        return playerMapper.toDTOList(
+                playerRepository.findByTeamIdAndMinRuns(teamId, minRuns)
+        );
+    }
 }

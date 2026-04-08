@@ -55,4 +55,14 @@ public class PlayerController {
         PlayerDTO updated = playerService.updatePlayerById(id, playerDTO);
         return ResponseEntity.ok(updated);
     }
+
+    @GetMapping("/team/{teamId}")
+    public ResponseEntity<List<PlayerDTO>> getPlayersByTeam(@PathVariable Integer teamId) {
+        return ResponseEntity.ok(playerService.getPlayersByTeam(teamId));
+    }
+
+    @GetMapping("/team/{teamId}/min-runs/{minRuns}")
+    public ResponseEntity<List<PlayerDTO>> getPlayersByTeamWithMinRuns(@PathVariable Integer teamId, @PathVariable Integer minRuns) {
+        return ResponseEntity.ok(playerService.getPlayersByTeamWithMinRuns(teamId, minRuns));
+    }
 }

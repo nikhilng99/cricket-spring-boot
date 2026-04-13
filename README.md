@@ -65,14 +65,25 @@ A RESTful backend API for managing cricket players and teams, built with Spring 
 | PUT | /api/v1/teams/{id} | Update team |
 
 ## Project Structure
-src/main/java/com/cricket/api/cricketapi/
-├── controller/    # REST controllers
-├── service/       # Business logic
-├── repository/    # Spring Data JPA repositories
-├── entity/        # JPA entities
-├── dto/           # Data Transfer Objects
-├── mapper/        # MapStruct mappers
-└── exception/     # Custom exceptions and global handler
+
+```text
+src/
+└── main/
+    └── java/
+        └── com/
+            └── cricket/
+                └── api/
+                    └── cricketapi/
+                        ├── controller/    # REST controllers
+                        ├── service/       # Business logic layer
+                        ├── repository/    # Spring Data JPA repositories
+                        ├── entity/        # JPA entity classes
+                        ├── dto/           # Data Transfer Objects
+                        ├── mapper/        # MapStruct mapper interfaces
+                        ├── exception/     # Custom exceptions and global exception handling
+                        └── CricketSpringBootApplication.java  # Main Spring Boot entry point
+                        
+```
 
 ## Commands to use:
 1. docker-compose up -d
